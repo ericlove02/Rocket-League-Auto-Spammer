@@ -1,7 +1,9 @@
 import tkinter as tk
-import keyboard
+import keyboard as kb
 import pyautogui as pag
-import mouse
+import mouse as ms
+from pynput import keyboard, mouse
+from time import sleep, time
 
 window = tk.Tk()
 window.title("Rocket League Spammer")
@@ -14,54 +16,54 @@ chatKey1 = None
 chatKey2 = None
 
 step = 0
+accepting = True
 
 
 def get_next_key():
     """get the next key pressed by keyboard, used to make key bind selections"""
-    if keyboard.is_pressed('w'):
+    if kb.is_pressed('w'):
         return 'w'
-    elif keyboard.is_pressed('a'):
+    elif kb.is_pressed('a'):
         return 'a'
-    elif keyboard.is_pressed('s'):
+    elif kb.is_pressed('s'):
         return 's'
-    elif keyboard.is_pressed('d'):
+    elif kb.is_pressed('d'):
         return 'd'
-    elif keyboard.is_pressed('left'):
+    elif kb.is_pressed('left'):
         return 'left'
-    elif keyboard.is_pressed('right'):
+    elif kb.is_pressed('right'):
         return 'right'
-    elif keyboard.is_pressed('up'):
+    elif kb.is_pressed('up'):
         return 'up'
-    elif keyboard.is_pressed('down'):
+    elif kb.is_pressed('down'):
         return 'down'
-    elif keyboard.is_pressed('space'):
+    elif kb.is_pressed('space'):
         return 'space'
-    elif keyboard.is_pressed('1'):
+    elif kb.is_pressed('1'):
         return '1'
-    elif keyboard.is_pressed('2'):
+    elif kb.is_pressed('2'):
         return '2'
-    elif keyboard.is_pressed('3'):
+    elif kb.is_pressed('3'):
         return '3'
-    elif keyboard.is_pressed('4'):
+    elif kb.is_pressed('4'):
         return '4'
-    elif keyboard.is_pressed('tab'):
+    elif kb.is_pressed('tab'):
         return 'tab'
-    elif mouse.is_pressed('left'):
-        return 'left mouse'
-    elif mouse.is_pressed('right'):
-        return 'right mouse'
+    # elif ms.is_pressed('left'):
+    #     return 'left mouse'
+    # elif ms.is_pressed('right'):
+    #     return 'right mouse'
 
 
 def change_window():
     """change the tkinter window item, including prompt and button. uses steps
-    variable to keep track of what step ofthe process the user is at"""
+    variable to keep track of what step of the process the user is at"""
     global step
 
     if step == 0:
         strPrompt.set("Rocket League Spammer will ask you for a key to bind you spam to (Ex. WASD, boost, etc), "
                       "and the 1st and 2nd key correspond to the quick chat you would like to spam")
         btnText.set("Next")
-        func.set("prompt1")
         step = 1
         return
 
@@ -129,33 +131,169 @@ def change_window():
 
     elif step == 9:
         window.destroy()
+        global exitLoop
         exitLoop = False
         while not exitLoop:
+            with keyboard.Listener(on_press=on_press,on_release=on_release) as listener:
+                print("listening")
+                listener.join()
 
-            if linkedKey == "left mouse" or linkedKey == "right mouse":
-                linkedKey = linkedKey[:-6]
-                if mouse.is_pressed(linkedKey):
-                    pag.press(chatKey1)
-                    pag.press(chatKey2)
-                linkedKey = linkedKey + " mouse"
-            else:
-                if keyboard.is_pressed(linkedKey):
-                    pag.press(chatKey1)
-                    pag.press(chatKey2)
-
-            if keyboard.is_pressed('`'):
-                exitLoop = True
+            # if linkedKey == "left mouse" or linkedKey == "right mouse":
+            #     linkedKey = linkedKey[:-6]
+            #     with mouse.Listener(on_press=on_press) as listener:
+            #         listener.join()
+            #     linkedKey = linkedKey + " mouse"
+            # else:
     else:
         strPrompt.set("Something went wrong...")
         return
 
 
+def on_release(key):
+    global accepting
+    if not accepting:
+        if key == keyboard.Key.space:
+            accepting = True
+        elif key == keyboard.Key.tab:
+            accepting = True
+        elif key == keyboard.Key.up:
+            accepting = True
+        elif key == keyboard.Key.down:
+            accepting = True
+        elif key == keyboard.Key.left:
+            accepting = True
+        elif key == keyboard.Key.right:
+            accepting = True
+        elif key == keyboard.Key.up:
+            print("up :|")
+        elif key == keyboard.Key.down:
+            print("down :|")
+        elif key == keyboard.Key.left:
+            print("left :|")
+        elif key == keyboard.Key.right:
+            print("right :|")
+        elif key == keyboard.Key.space:
+            print("space :|")
+        elif key == keyboard.Key.esc:
+            print("esc :|")
+        elif key == keyboard.Key.ctrl_l:
+            print("ctrl :|")
+        elif key == keyboard.Key.ctrl_r:
+            print("ctrl :|")
+        elif key == keyboard.Key.shift_l:
+            print("shift_l :|")
+        elif key == keyboard.Key.shift_r:
+            print("shift_r :|")
+        elif key == keyboard.Key.backspace:
+            print("backspace :|")
+        elif key == keyboard.Key.alt_l:
+            print("alt_l :|")
+        elif key == keyboard.Key.caps_lock:
+            print("caps_lock :|")
+        elif key == keyboard.Key.cmd_l:
+            print("cmd_l :|")
+        elif key == keyboard.Key.cmd_r:
+            print("cmd_r :|")
+        elif key == keyboard.Key.delete:
+            print("delete :|")
+        elif key == keyboard.Key.enter:
+            print("enter :|")
+        elif key == keyboard.Key.media_next:
+            print("media_next :|")
+        elif key == keyboard.Key.media_play_pause:
+            print("media_play_pause :|")
+        elif key == keyboard.Key.tab:
+            print("tab :|")
+        elif (key.char == 'w') \
+                or (key.char == 'a') \
+                or (key.char == 's') \
+                or (key.char == 'd'):
+            accepting = True
+
+
+def on_press(key):
+    global accepting
+    if accepting:
+        print("pressed and used")
+    else:
+        print("")
+    if accepting:
+        accepting = False
+        if 'space' == linkedKey and key == keyboard.Key.space:
+            pag.press(chatKey1)
+            pag.press(chatKey2)
+        elif 'tab' == linkedKey and key == keyboard.Key.tab:
+            pag.press(chatKey1)
+            pag.press(chatKey2)
+        elif 'up' == linkedKey and key == keyboard.Key.up:
+            pag.press(chatKey1)
+            pag.press(chatKey2)
+        elif 'down' == linkedKey and key == keyboard.Key.down:
+            pag.press(chatKey1)
+            pag.press(chatKey2)
+        elif 'left' == linkedKey and key == keyboard.Key.left:
+            pag.press(chatKey1)
+            pag.press(chatKey2)
+        elif 'right' == linkedKey and key == keyboard.Key.right:
+            pag.press(chatKey1)
+            pag.press(chatKey2)
+        elif key == keyboard.Key.up:
+            print("up :|")
+        elif key == keyboard.Key.down:
+            print("down :|")
+        elif key == keyboard.Key.left:
+            print("left :|")
+        elif key == keyboard.Key.right:
+            print("right :|")
+        elif key == keyboard.Key.space:
+            print("space :|")
+        elif key == keyboard.Key.esc:
+            print("esc :|")
+        elif key == keyboard.Key.ctrl_l:
+            print("ctrl :|")
+        elif key == keyboard.Key.ctrl_r:
+            print("ctrl :|")
+        elif key == keyboard.Key.shift_l:
+            print("shift_l :|")
+        elif key == keyboard.Key.shift_r:
+            print("shift_r :|")
+        elif key == keyboard.Key.backspace:
+            print("backspace :|")
+        elif key == keyboard.Key.alt_l:
+            print("alt_l :|")
+        elif key == keyboard.Key.caps_lock:
+            print("caps_lock :|")
+        elif key == keyboard.Key.cmd_l:
+            print("cmd_l :|")
+        elif key == keyboard.Key.cmd_r:
+            print("cmd_r :|")
+        elif key == keyboard.Key.delete:
+            print("delete :|")
+        elif key == keyboard.Key.enter:
+            print("enter :|")
+        elif key == keyboard.Key.media_next:
+            print("media_next :|")
+        elif key == keyboard.Key.media_play_pause:
+            print("media_play_pause :|")
+        elif key == keyboard.Key.tab:
+            print("tab :|")
+        elif ('w' == linkedKey and key.char == 'w') \
+                or ('a' == linkedKey and key.char == 'a') \
+                or ('s' == linkedKey and key.char == 's') \
+                or ('d' == linkedKey and key.char == 'd'):
+            pag.press(chatKey1)
+            pag.press(chatKey2)
+        elif key.char == '`':
+            print("Exit")
+            global exitLoop
+            exitLoop = True
+            exit(0)
+
+
 strPrompt = tk.StringVar()
 btnText = tk.StringVar()
-func = tk.StringVar()
 strPrompt.set("Welcome to Rocket League Spammer!")
 btnText.set("Begin")
-func.set("prompt0")
 
 prompt = tk.Label(window, textvariable=strPrompt)
 button = tk.Button(textvariable=btnText, command=change_window)

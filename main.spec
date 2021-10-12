@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['D:\\ericl\\Documents\\PyCharmProjects\\RocketLeagueSpammer'],
+             pathex=['D:\\ericl\\Documents\\PyCharmProjects\\Rocket-League-Auto-Spammer'],
              binaries=[],
              datas=[],
              hiddenimports=[],
