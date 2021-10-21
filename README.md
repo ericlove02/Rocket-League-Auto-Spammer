@@ -1,8 +1,9 @@
+<div id="top"></div>    
+
 # Rocket-League-Auto-Spammer
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-<div id="top"></div>
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
