@@ -74,7 +74,7 @@ https://user-images.githubusercontent.com/53005525/138221254-359a617d-b3fd-46d4-
 
 Eric Love - [LinkedIn](https://www.linkedin.com/in/ericlove02) - [eric.love02@yahoo.com](mailto:eric.love02@yahoo.com)
 
-Project Link: [https://github.com/ericlove02/Valorant-Bot](https://github.com/ericlove02/Valorant-Bot)
+Project Link: [https://github.com/ericlove02/Rocket-League-Auto-Spammer](https://github.com/ericlove02/Rocket-League-Auto-Spammer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
